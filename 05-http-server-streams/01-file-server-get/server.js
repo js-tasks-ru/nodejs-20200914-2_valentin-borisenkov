@@ -10,7 +10,7 @@ const trySendFileContent = (req, res, filepath) => {
 
   // QUESTION : req.on('aborted') has never worked here, maybe 'cause I'm using node 12 yet?
   // - При обрыве соединения необходимо завершить работу стрима.
-  req.on('aborted', () => {
+  req.on('close', () => {
     if (req.aborted) {
       fileStream.destroy();
     }
