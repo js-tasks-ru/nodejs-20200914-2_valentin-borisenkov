@@ -8,11 +8,13 @@ const server = new http.Server();
 const trySendFileContent = (req, res, filepath) => {
   const fileStream = createReadStream(filepath, {flags: 'r'});
 
+  // QUESTION : req.on('aborted') has never worked here, maybe 'cause I'm using node 12 yet?
   // - При обрыве соединения необходимо завершить работу стрима.
-  req.on('close', () => {
-    console.log('request has closed !');
-    fileStream.destroy();
-    // question - do I need this?
+  req.on('aborted', () => {
+    if (req.aborted) {
+      fileStream.destroy();
+    }
+    // QUESTION - do I need this?
     res.end();
   });
 
