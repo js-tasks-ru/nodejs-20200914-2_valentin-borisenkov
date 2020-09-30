@@ -13,7 +13,7 @@ const trySendFileContent = (req, res, filepath) => {
     console.log('request has closed !');
     fileStream.destroy();
     // question - do I need this?
-    res.end('');
+    res.end();
   });
 
   // helper console log to identify stream is closed on connection abort
