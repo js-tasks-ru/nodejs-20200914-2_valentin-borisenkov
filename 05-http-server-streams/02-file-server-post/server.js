@@ -26,8 +26,9 @@ const handlePostRequest = (req, res, filepath) => {
 
   finished(writeableStream, (err) => {
     if (err) {
-      res.statusCode = 409;
-      res.end(http.STATUS_CODES[409]);
+      const errCode = err.code === 'EEXIST' ? 409 : 500;
+      res.statusCode = errCode;
+      res.end(http.STATUS_CODES[errCode]);
     }
 
     res.statusCode = 201;
