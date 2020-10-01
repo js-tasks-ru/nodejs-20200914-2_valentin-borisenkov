@@ -21,7 +21,7 @@ const trySendFileContent = (req, res, filepath) => {
   // helper console log to identify stream is closed on connection abort
   // (i.e. slow network simulation in Chrome and then stop the page loading)
   fileStream.on('close', () => {
-    console.log('stream closed');
+    // console.log('stream closed');
   });
 
   res.statusCode = 200;
