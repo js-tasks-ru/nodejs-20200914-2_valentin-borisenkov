@@ -12,9 +12,9 @@ const handleDelete = (req, res, filename) => {
       const errCode = isNotFound ? 404 : 500;
       res.statusCode = errCode;
       res.end(http.STATUS_CODES[errCode]);
+    } else {
+      res.end('OK');
     }
-
-    res.end('OK');
   });
 };
 
@@ -24,6 +24,7 @@ server.on('request', (req, res) => {
   if (pathname.split('/').length !== 1) {
     res.statusCode = 400;
     res.end(http.STATUS_CODES[400]);
+    return;
   }
 
   const filepath = path.join(__dirname, 'files', pathname);

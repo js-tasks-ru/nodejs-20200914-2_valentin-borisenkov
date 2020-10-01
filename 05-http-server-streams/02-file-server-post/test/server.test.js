@@ -172,7 +172,7 @@ describe('http-server-streams/file-server-post', () => {
             });
 
         request.on('error', done);
-        request.end();
+        request.end(); 
       });
     });
   });

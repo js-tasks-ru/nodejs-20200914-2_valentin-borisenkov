@@ -26,13 +26,15 @@ const handlePostRequest = (req, res, filepath) => {
 
   finished(writeableStream, (err) => {
     if (err) {
-      const errCode = err.code === 'EEXIST' ? 409 : 500;
-      res.statusCode = errCode;
-      res.end(http.STATUS_CODES[errCode]);
+      if (!res.headersSent) {
+        const errCode = err.code === 'EEXIST' ? 409 : 500;
+        res.statusCode = errCode;
+        res.end(http.STATUS_CODES[errCode]);
+      }
+    } else {
+      res.statusCode = 201;
+      res.end(http.STATUS_CODES[201]);
     }
-
-    res.statusCode = 201;
-    res.end(http.STATUS_CODES[201]);
   });
 
   finished(limitSizeStream, (err) => {
@@ -60,6 +62,7 @@ server.on('request', (req, res) => {
   if (pathname.split('/').length !== 1) {
     res.statusCode = 400;
     res.end(http.STATUS_CODES[400]);
+    return;
   }
 
   const filepath = path.join(__dirname, 'files', pathname);
