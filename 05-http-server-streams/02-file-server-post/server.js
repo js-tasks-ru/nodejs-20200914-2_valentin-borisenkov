@@ -10,7 +10,7 @@ const server = new http.Server();
 const tryRemoveFileAsync = (filepath) => {
   unlink(filepath, (err) => {
     if (err) {
-      console.log(err);
+      // console.log(err);
     }
   });
 };
